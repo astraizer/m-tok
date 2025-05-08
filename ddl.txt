@@ -1,29 +1,106 @@
 -- DROP SCHEMA public;
 
 CREATE SCHEMA public AUTHORIZATION kevin;
--- public.cinemas definition
+
+-- DROP SEQUENCE public.booking_seats_id_seq;
+
+CREATE SEQUENCE public.booking_seats_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.bookings_id_seq;
+
+CREATE SEQUENCE public.bookings_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.cinema_id_seq;
+
+CREATE SEQUENCE public.cinema_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.city_id_seq;
+
+CREATE SEQUENCE public.city_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.movies_id_seq;
+
+CREATE SEQUENCE public.movies_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.rating_id_seq;
+
+CREATE SEQUENCE public.rating_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.seats_id_seq;
+
+CREATE SEQUENCE public.seats_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.showtimes_id_seq;
+
+CREATE SEQUENCE public.showtimes_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.studio_type_id_seq;
+
+CREATE SEQUENCE public.studio_type_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.studios_id_seq;
+
+CREATE SEQUENCE public.studios_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	START 1
+	CACHE 1
+	NO CYCLE;-- public.city definition
 
 -- Drop table
 
--- DROP TABLE public.cinemas;
+-- DROP TABLE public.city;
 
-CREATE TABLE public.cinemas (
+CREATE TABLE public.city (
+	id int4 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
 	"name" varchar NULL,
-	id int4 GENERATED ALWAYS AS IDENTITY NOT NULL,
-	CONSTRAINT cinema_pk PRIMARY KEY (id)
-);
-
-
--- public.studio_types definition
-
--- Drop table
-
--- DROP TABLE public.studio_types;
-
-CREATE TABLE public.studio_types (
-	id int4 GENERATED ALWAYS AS IDENTITY NOT NULL,
-	"name" varchar NULL,
-	CONSTRAINT studio_type_pk PRIMARY KEY (id)
+	CONSTRAINT city_pk PRIMARY KEY (id)
 );
 
 
@@ -34,9 +111,53 @@ CREATE TABLE public.studio_types (
 -- DROP TABLE public.rating;
 
 CREATE TABLE public.rating (
-	id int4 GENERATED ALWAYS AS IDENTITY NOT NULL,
+	id int4 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
 	"name" varchar NULL,
 	CONSTRAINT rating_pk PRIMARY KEY (id)
+);
+
+
+-- public.studio_types definition
+
+-- Drop table
+
+-- DROP TABLE public.studio_types;
+
+CREATE TABLE public.studio_types (
+	id int4 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
+	"name" varchar NULL,
+	CONSTRAINT studio_type_pk PRIMARY KEY (id)
+);
+
+
+-- public.cinemas definition
+
+-- Drop table
+
+-- DROP TABLE public.cinemas;
+
+CREATE TABLE public.cinemas (
+	"name" varchar NULL,
+	id int4 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
+	city_id int4 NULL,
+	CONSTRAINT cinema_pk PRIMARY KEY (id),
+	CONSTRAINT cinemas_city_fk FOREIGN KEY (city_id) REFERENCES public.city(id)
+);
+
+
+-- public.movies definition
+
+-- Drop table
+
+-- DROP TABLE public.movies;
+
+CREATE TABLE public.movies (
+	"name" varchar NULL,
+	id int4 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
+	synopsis varchar NULL,
+	rating_id int4 NULL,
+	CONSTRAINT movies_pk PRIMARY KEY (id),
+	CONSTRAINT movies_rating_fk FOREIGN KEY (rating_id) REFERENCES public.rating(id)
 );
 
 
@@ -51,7 +172,7 @@ CREATE TABLE public.studios (
 	total_row int4 NULL,
 	total_col int4 NULL,
 	cinema_id int4 NULL,
-	id int4 GENERATED ALWAYS AS IDENTITY NOT NULL,
+	id int4 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
 	price float8 NULL,
 	studio_type_id int4 NULL,
 	CONSTRAINT studios_pk PRIMARY KEY (id),
@@ -71,25 +192,9 @@ CREATE TABLE public.seats (
 	"number" varchar NULL,
 	visible bool DEFAULT true NULL,
 	available bool DEFAULT true NULL,
-	id int4 GENERATED ALWAYS AS IDENTITY NOT NULL,
+	id int4 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
 	CONSTRAINT seats_pk PRIMARY KEY (id),
 	CONSTRAINT seats_studios_fk FOREIGN KEY (studio_id) REFERENCES public.studios(id)
-);
-
-
--- public.movies definition
-
--- Drop table
-
--- DROP TABLE public.movies;
-
-CREATE TABLE public.movies (
-	"name" varchar NULL,
-	id int4 GENERATED ALWAYS AS IDENTITY NOT NULL,
-	synopsis varchar NULL,
-	rating_id int4 NULL,
-	CONSTRAINT movies_pk PRIMARY KEY (id),
-	CONSTRAINT movies_rating_fk FOREIGN KEY (rating_id) REFERENCES public.rating(id)
 );
 
 
@@ -101,7 +206,7 @@ CREATE TABLE public.movies (
 
 CREATE TABLE public.showtimes (
 	movie_id int4 NULL,
-	id int4 GENERATED ALWAYS AS IDENTITY NOT NULL,
+	id int4 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
 	studio_id int4 NULL,
 	start_time timestamp NULL,
 	end_time timestamp NULL,
@@ -119,7 +224,7 @@ CREATE TABLE public.showtimes (
 
 CREATE TABLE public.bookings (
 	showtime_id int4 NULL,
-	id int4 GENERATED ALWAYS AS IDENTITY NOT NULL,
+	id int4 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
 	total_price float8 NULL,
 	CONSTRAINT bookings_pk PRIMARY KEY (id),
 	CONSTRAINT bookings_showtimes_fk FOREIGN KEY (showtime_id) REFERENCES public.showtimes(id)
@@ -134,7 +239,7 @@ CREATE TABLE public.bookings (
 
 CREATE TABLE public.booking_seats (
 	booking_id int4 NULL,
-	id int4 GENERATED ALWAYS AS IDENTITY NOT NULL,
+	id int4 GENERATED ALWAYS AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
 	seat_id int4 NULL,
 	CONSTRAINT booking_seats_pk PRIMARY KEY (id),
 	CONSTRAINT booking_seats_bookings_fk FOREIGN KEY (booking_id) REFERENCES public.bookings(id),
