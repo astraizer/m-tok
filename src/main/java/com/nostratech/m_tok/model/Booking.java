@@ -3,6 +3,8 @@ package com.nostratech.m_tok.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Table(name = "booking")
 @Data
 public class Booking {
@@ -13,5 +15,7 @@ public class Booking {
 
     @ManyToOne
     private Showtime showtime;
+
+    private BigDecimal totalPrice;
 
 }
