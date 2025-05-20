@@ -7,29 +7,29 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Table(name = "studio")
+@Table(name = "studios")
+@Entity
 @Data
 public class Studio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "total_row")
+    @Column(name = "total_row",nullable = false)
     private Integer totalRow;
 
-    @Column(name = "total_col")
+    @Column(name = "total_col",nullable = false)
     private Integer totalCol;
 
-    @Column(name = "price")
-    private BigDecimal price;
-
     @ManyToOne
+    @JoinColumn(name = "studio_type_id", nullable = false)
     private StudioType studioType;
 
-    @OneToMany
-    private Cinema cinemas;
+    @ManyToOne
+    @JoinColumn(name = "cinema_id", nullable = false)
+    private Cinema cinema;
 
 }

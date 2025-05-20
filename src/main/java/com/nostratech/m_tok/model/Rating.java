@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Table(name = "rating")
+@Entity
 @Data
 public class Rating {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String code;
 
-    @Column(name = "name")
+    @Column(nullable = false)
     private String name;
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Table(name = "cinemas")
+@Entity
 @Data
 public class Cinema {
 
@@ -13,12 +14,12 @@ public class Cinema {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(nullable = false)
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "studio_id")
-    private List<Studio> studio;
+    @ManyToOne
+    @JoinColumn(name = "city", nullable = false)
+    private City city;
 
 
 }

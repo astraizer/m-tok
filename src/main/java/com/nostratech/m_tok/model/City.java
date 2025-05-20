@@ -6,19 +6,14 @@ import lombok.Data;
 import java.util.List;
 
 @Table(name = "city")
+@Entity
 @Data
 public class City {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String code;
 
-    @Column(name = "name")
+    @Column(nullable = false)
     private String name;
-
-
-    @OneToMany
-    @JoinColumn(name = "cinema_id")
-    private List<Cinema> cinemas;
 
 
 }
