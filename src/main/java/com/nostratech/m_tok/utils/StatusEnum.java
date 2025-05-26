@@ -1,7 +1,7 @@
 package com.nostratech.m_tok.utils;
 
 public enum StatusEnum {
-    UNPAID,
+    PENDING,
     PAID,
     EXPIRED,
     CANCELLED
