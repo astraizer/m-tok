@@ -19,4 +19,14 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     AND b.status IN :status
     """)
     List<Booking> findAllBySearchAndCinemaAndStatusIn(String search,Long cinemaId,List<StatusEnum> status);
+
+    @Query(value = """
+    SELECT b
+    FROM Booking b
+    JOIN b.seats s
+    WHERE b.showtime.id = :showtimeId
+    AND s.id IN :seatId
+    AND b.status NOT IN :status
+    """)
+    List<Booking> findBySeatsNumberInAndShowtimeIdAndStatusNotIn(List<Long> seatId, Long showtimeId, List<StatusEnum> status);
 }

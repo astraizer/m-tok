@@ -1,8 +1,11 @@
 package com.nostratech.m_tok.dto.request;
 
+import com.nostratech.m_tok.validation.annotation.BookingValid;
+
 import java.math.BigDecimal;
 import java.util.List;
 
+@BookingValid
 public class BookingRequestDto {
     private Long userId;
     private Long showtimeId;

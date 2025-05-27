@@ -27,6 +27,4 @@ public interface SeatRepository extends JpaRepository<Seat,Long> {
             CAST(SUBSTRING(number FROM 2) AS INTEGER);
         """,nativeQuery = true)
     List<Object[]> findSeatByShowTimeId(Long showTimeId);
-
-    List<Seat> findAllByIdIn(List<Long> ids);
 }

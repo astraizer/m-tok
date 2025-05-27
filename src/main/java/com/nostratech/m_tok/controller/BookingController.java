@@ -4,6 +4,7 @@ import com.nostratech.m_tok.dto.request.BookingRequestDto;
 import com.nostratech.m_tok.dto.response.BookingDetailDto;
 import com.nostratech.m_tok.dto.response.BookingDto;
 import com.nostratech.m_tok.service.BookingService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class BookingController {
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> booking(@RequestBody BookingRequestDto dto) {
+    public ResponseEntity<Boolean> booking(@Valid @RequestBody BookingRequestDto dto) {
         Boolean result = bookingService.booking(dto);
         return ResponseEntity.created(URI.create("/v1/booking")).body(result);
     }

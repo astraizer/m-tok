@@ -1,7 +1,6 @@
 package com.nostratech.m_tok.persistence.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
 @Table(name = "cinemas")
 @Entity

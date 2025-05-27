@@ -2,7 +2,6 @@ package com.nostratech.m_tok.persistence.model;
 
 import com.nostratech.m_tok.utils.StatusEnum;
 import jakarta.persistence.*;
-import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
