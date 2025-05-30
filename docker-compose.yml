@@ -22,6 +22,21 @@ services:
     - m_tox_volume:/var/lib/postgresql/data
 
 
+  minio:
+    image: quay.io/minio/minio:RELEASE.2025-04-22T22-12-26Z
+    ports:
+      - "9000:9000"      # API
+      - "9001:9001"      # Console UI
+    environment:
+      MINIO_ROOT_USER: ROOTNAME
+      MINIO_ROOT_PASSWORD: CHANGEME123
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_volume:/data
+
+
 volumes:
   m_tox_volume:
+    external: true
+  minio_volume:
     external: true

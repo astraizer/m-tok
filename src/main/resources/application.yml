@@ -16,3 +16,9 @@ spring:
           batch_size: 100
         order_inserts: true
     show-sql: true
+
+minio:
+  accessKey: VGWHGb5l6QXggNuvnvyv
+  secretKey: YjapPgPR0YASANR00vgf2c8yGSUJqQ6Pw7W351Sk
+  url: http://localhost:9000
+  bucket-name: m-tox
