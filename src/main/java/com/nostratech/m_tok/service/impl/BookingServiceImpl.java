@@ -7,11 +7,15 @@ import com.nostratech.m_tok.persistence.model.*;
 import com.nostratech.m_tok.persistence.repository.*;
 import com.nostratech.m_tok.service.BookingService;
 import com.nostratech.m_tok.utils.StatusEnum;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,10 +63,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingDto> bookingList(String search,Long cinemaId) {
+    public Map<String, Object> bookingList(String search, Long cinemaId, Pageable pageable) {
 
         List<StatusEnum> status = new ArrayList<>(List.of(StatusEnum.PENDING));
-        List<Booking> bookings = bookingRepository.findAllBySearchAndCinemaAndStatusIn("%"+search+"%",cinemaId,status);
+        Page<Booking> bookingPage = bookingRepository.findAllBySearchAndCinemaAndStatusIn("%"+search+"%",cinemaId,status,pageable);
+        List<Booking> bookings = bookingPage.getContent();
         List<BookingDto> dtos = new ArrayList<>();
         for(Booking booking : bookings) {
             User user = booking.getUser();
@@ -77,7 +82,12 @@ public class BookingServiceImpl implements BookingService {
             dto.setStatus(booking.getStatus().name());
             dtos.add(dto);
         }
-        return dtos;
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("content",dtos);
+        map.put("totalElements",bookingPage.getTotalElements());
+        map.put("totalPages",bookingPage.getTotalPages());
+        return map;
     }
 
     @Override

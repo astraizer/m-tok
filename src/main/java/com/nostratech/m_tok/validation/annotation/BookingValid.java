@@ -17,7 +17,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface BookingValid {
 
 
-    String message() default "Error Name";
+    String message() default "Booking not valid";
 
     Class<?>[] groups() default { };
 
