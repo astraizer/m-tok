@@ -23,6 +23,9 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
             SELECT m.id,
                 m.name,
                 m.image,
+                m.duration,
+                m.genre,
+                s2.name,
                 s.price,
                 c.name,
                 array_agg(s.id)
@@ -32,7 +35,7 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
             join cinemas c on c.id = s2.cinema_id
             where s2.studio_type_id = :studioType and s2.cinema_id = :cinemaId
                 and DATE(s.start_time) = :date
-            group by m.id,m.name,m.image,s.price,c.name
+            group by m.id,m.name,m.image,s.price,c.name,m.duration,m.genre,s2.name
     """,nativeQuery = true)
     List<Object []> findMovieByCinemaIdAndStudioType(Long cinemaId, Integer studioType, LocalDate date);
 }

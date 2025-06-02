@@ -1,12 +1,13 @@
 package com.nostratech.m_tok.dto.response;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 
 public class CinemaShowtimeDto{
     private String movieName;
     private String movieImage;
+    private Integer movieDuration;
+    private String movieGenre;
     private String studioName;
     private String cinemaName;
     private BigDecimal price;
@@ -58,5 +59,21 @@ public class CinemaShowtimeDto{
 
     public void setShowtimeDtos(List<ShowtimeDto> showtimeDtos) {
         this.showtimeDtos = showtimeDtos;
+    }
+
+    public Integer getMovieDuration() {
+        return movieDuration;
+    }
+
+    public void setMovieDuration(Integer movieDuration) {
+        this.movieDuration = movieDuration;
+    }
+
+    public String getMovieGenre() {
+        return movieGenre;
+    }
+
+    public void setMovieGenre(String movieGenre) {
+        this.movieGenre = movieGenre;
     }
 }

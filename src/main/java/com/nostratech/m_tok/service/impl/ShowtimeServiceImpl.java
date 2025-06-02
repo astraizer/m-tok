@@ -52,10 +52,13 @@ public class ShowtimeServiceImpl implements ShowtimeService {
             CinemaShowtimeDto cinemaShowtimeDto = new CinemaShowtimeDto();
             cinemaShowtimeDto.setMovieName((String) showtime[1]);
             cinemaShowtimeDto.setMovieImage((String) showtime[2]);
-            BigDecimal priceDecimal = (BigDecimal) showtime[3];
+            cinemaShowtimeDto.setMovieDuration((Integer) showtime[3]);
+            cinemaShowtimeDto.setMovieGenre((String) showtime[4]);
+            cinemaShowtimeDto.setStudioName((String) showtime[5]);
+            BigDecimal priceDecimal = (BigDecimal) showtime[6];
             cinemaShowtimeDto.setPrice(priceDecimal);
-            cinemaShowtimeDto.setCinemaName((String) showtime[4]);
-            Long[] ids = (Long[]) showtime[5];
+            cinemaShowtimeDto.setCinemaName((String) showtime[7]);
+            Long[] ids = (Long[]) showtime[8];
             List<ShowtimeDto> showtimeDto = new ArrayList<>();
             for (Long id : ids) {
                 ShowtimeDto dto = showtimeDtos.get(id);
