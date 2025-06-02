@@ -22,6 +22,12 @@ public class Movie {
     @JoinColumn(name = "rating", nullable = false)
     private Rating rating;
 
+    @Column(nullable = false)
+    private Integer duration;
+
+    @Column(nullable = false)
+    private String genre;
+
     public Long getId() {
         return id;
     }
@@ -60,5 +66,21 @@ public class Movie {
 
     public void setRating(Rating rating) {
         this.rating = rating;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }
