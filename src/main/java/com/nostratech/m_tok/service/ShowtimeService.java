@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ShowtimeService {
 
-    List<CinemaShowtimeDto> listShowtime(Long cinemaId, Integer studioType);
+    List<CinemaShowtimeDto> listShowtime(Long cinemaId, Integer studioType, Long dateEpoch);
     ShowtimeDetailDto getDetailShowTime(Long showtimeId);
 }

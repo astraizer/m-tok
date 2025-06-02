@@ -9,6 +9,9 @@ import com.nostratech.m_tok.service.ShowtimeService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -21,9 +24,19 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     }
 
     @Override
-    public List<CinemaShowtimeDto> listShowtime(Long cinemaId, Integer studioType) {
+    public List<CinemaShowtimeDto> listShowtime(Long cinemaId, Integer studioType, Long dateEpoch) {
 
-        List<Showtime> showtimes = showtimeRepository.findByCinemaIdAndStudioType(cinemaId,studioType);
+
+        ZoneId zoneId = ZoneId.of("Asia/Bangkok"); // or your actual zone
+
+        LocalDate inputDate = Instant.ofEpochMilli(dateEpoch).atZone(zoneId).toLocalDate();
+        LocalDate today = LocalDate.now(zoneId);
+
+        if (!inputDate.equals(today)) {
+            throw new RuntimeException("Invalid date");
+        }
+
+        List<Showtime> showtimes = showtimeRepository.findByCinemaIdAndStudioType(cinemaId,studioType,inputDate);
         Map<Long, ShowtimeDto> showtimeDtos = new HashMap<>();
         for (Showtime showtime : showtimes) {
             ShowtimeDto showtimeDto = new ShowtimeDto();
@@ -34,7 +47,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         }
 
         List<CinemaShowtimeDto> dtos = new ArrayList<>();
-        List<Object[]> moviesShowTime = showtimeRepository.findMovieByCinemaIdAndStudioType(cinemaId,studioType);
+        List<Object[]> moviesShowTime = showtimeRepository.findMovieByCinemaIdAndStudioType(cinemaId,studioType,inputDate);
         for (Object[] showtime : moviesShowTime) {
             CinemaShowtimeDto cinemaShowtimeDto = new CinemaShowtimeDto();
             cinemaShowtimeDto.setMovieName((String) showtime[1]);

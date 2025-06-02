@@ -20,8 +20,9 @@ public class ShowtimeController {
 
     @GetMapping
     public ResponseEntity<Object> getShowtime(@RequestParam Long cinemaId,
-                                              @RequestParam Integer studioType) {
-        List<CinemaShowtimeDto> dtos = showtimeService.listShowtime(cinemaId,studioType);
+                                              @RequestParam Integer studioType,
+                                              @RequestParam Long date) {
+        List<CinemaShowtimeDto> dtos = showtimeService.listShowtime(cinemaId,studioType,date);
         return ResponseEntity.ok(dtos);
     }
 
