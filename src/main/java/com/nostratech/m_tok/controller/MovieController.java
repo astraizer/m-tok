@@ -31,7 +31,7 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> testing(@Valid @RequestBody MovieRequestDto dto) {
+    public ResponseEntity<Boolean> addMovie(@Valid @RequestBody MovieRequestDto dto) {
         Boolean result = movieService.addMovie(dto);
         return ResponseEntity.ok(result);
     }
